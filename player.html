@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Player de Vídeo com Libras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/libras-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #ef4444;
+            --purple: #a21caf;
+            --zinc-900: #18181b;
+            --zinc-800: #27272a;
+            --zinc-700: #3f3f46;
+            --zinc-400: #a1a1aa;
+            --zinc-300: #d4d4d8;
+            --white: #fff;
+                <style>
+                    .navbar {
+                        position: fixed;
+                        top: 0; left: 0; right: 0;
+                        background: rgba(24,24,27,0.92);
+                        border-bottom: 1.5px solid var(--zinc-800);
+                        z-index: 100;
+                        box-shadow: 0 2px 16px #0002;
+                    }
+                    .navbar-content {
+                        max-width: 1100px;
+                        margin: 0 auto;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0 24px;
+                        height: 64px;
+                    }
+                    .navbar-logo {
+                        font-weight: 700;
+                        font-size: 1.5rem;
+                        background: linear-gradient(90deg, var(--red), var(--purple));
+                        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                        background-clip: text; color: transparent;
+                        text-decoration: none;
+                    }
+                    .navbar-logo span {
+                        color: var(--red); -webkit-text-fill-color: var(--red); text-fill-color: var(--red); background: none;
+                    }
+                    .navbar-links {
+                        display: flex; gap: 18px;
+                    }
+                    .navbar-link {
+                        color: var(--zinc-300);
+                        font-weight: 600;
+                        text-decoration: none;
+                        padding: 8px 18px;
+                        border-radius: 999px;
+                        transition: background .2s, color .2s;
+                        font-size: 1rem;
+                    }
+                    .navbar-link:hover, .navbar-link.active {
+                        background: linear-gradient(90deg, var(--red), var(--purple));
+                        color: #fff;
+                    }
+                    @media (max-width: 700px) {
+                        .navbar-content { padding: 0 8px; }
+                        .navbar-logo { font-size: 1.1rem; }
+                        .navbar-link { font-size: 0.95rem; padding: 7px 10px; }
+                    }
+            --radius: 1.2rem;
+                <header class="navbar">
+                    <nav class="navbar-content">
+                        <a href="index.html" class="navbar-logo">Libras<span style="color:var(--red);">Player</span></a>
+                        <div class="navbar-links">
+                            <a href="index.html" class="navbar-link">Home</a>
+                            <a href="player.html" class="navbar-link active">Player</a>
+                        </div>
+                    </nav>
+                </header>
+        }
+        html, body {
+            margin: 0; padding: 0; min-height: 100%;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--zinc-900), var(--purple) 80%, var(--zinc-900));
+            color: var(--white);
+        }
+        .main-container {
+            max-width: 900px; margin: 0 auto; padding: 32px 12px 60px 12px;
+        }
+        .glass-card {
+            background: var(--glass); border-radius: var(--radius); box-shadow: 0 4px 32px #0002;
+            border: 1.5px solid var(--zinc-800); padding: 32px; margin-bottom: 32px;
+            backdrop-filter: blur(8px);
+        }
+        .title {
+            font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;
+            background: linear-gradient(90deg, var(--red), var(--purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; color: transparent;
+            text-align: center;
+        }
+        .subtitle {
+            color: var(--zinc-400); font-size: 1.2rem; margin-bottom: 32px; text-align: center;
+        }
+        .input-btn {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+        }
+        .input-btn input[type="file"] { display: none; }
+        .btn {
+            background: transparent; color: var(--red); border: 2px solid var(--red);
+            border-radius: 999px; padding: 10px 28px; font-weight: 700; cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+        .btn:hover { background: var(--red); color: #fff; }
+        .error {
+            color: var(--red); background: #ef444422; border-radius: 8px; padding: 12px 18px; margin-bottom: 18px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .video-box { margin-bottom: 24px; }
+        video { width: 100%; max-width: 700px; border-radius: 12px; background: #000; display: block; margin: 0 auto; }
+        .legend-title { font-weight: 600; margin-bottom: 8px; }
+        .legend-box { background: #232136cc; padding: 16px; border-radius: 10px; font-size: 1.1rem; margin-bottom: 18px; }
+        .libras-title { font-weight: 600; margin-bottom: 8px; }
+        .libras-box { background: #232136cc; padding: 16px; border-radius: 10px; min-height: 60px; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .libras-box img { height: 40px; width: auto; border-radius: 6px; border: 2px solid #ef444455; background: #fff; }
+        .how-card { background: var(--zinc-800); border-radius: var(--radius); padding: 24px 18px; margin-top: 32px; }
+        .how-card h3 { margin-bottom: 12px; font-size: 1.1rem; font-weight: 700; }
+        .how-card ol { color: var(--zinc-300); font-size: 1rem; padding-left: 18px; }
+        @media (max-width: 700px) {
+            .main-container, .glass-card { padding: 12px; }
+            .title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <nav class="navbar-content">
+            <a href="index.html" class="navbar-logo">Libras<span style="color:var(--red);">Player</span></a>
+            <div class="navbar-links">
+                <a href="index.html" class="navbar-link">Home</a>
+                <a href="player.html" class="navbar-link active">Player</a>
+            </div>
+        </nav>
+    </header>
+    <div class="main-container" style="margin-top:80px;">
+        <div class="title">Player de Vídeo com <span style="color:var(--red);">Libras</span></div>
+        <div class="subtitle">Faça upload do seu vídeo e arquivo de legendas para uma experiência acessível</div>
+        <div class="glass-card">
+            <div class="input-btn">
+                <label for="videoInput" class="btn">Escolher vídeo</label>
+                <input type="file" id="videoInput" accept="video/mp4">
+                <span id="videoFileName" style="color:var(--zinc-300);"></span>
+            </div>
+            <div class="input-btn">
+                <label for="vttInput" class="btn">Escolher legendas</label>
+                <input type="file" id="vttInput" accept=".vtt">
+                <span id="vttFileName" style="color:var(--zinc-300);"></span>
+            </div>
+            <div id="videoError" class="error" style="display:none;"></div>
+            <div class="video-box">
+                <video id="videoPlayer" controls></video>
+            </div>
+            <div>
+                <div class="legend-title">Legenda traduzida (LIBRAS):</div>
+                <div id="segmentoAtual" class="legend-box"></div>
+            </div>
+            <div>
+                <div id="librasImages" class="libras-box"></div>
+            </div>
+        </div>
+        <div class="how-card">
+            <h3>Como usar:</h3>
+            <ol>
+                <li>1. Faça upload de um vídeo no formato MP4</li>
+                <li>2. Adicione um arquivo de legendas no formato VTT com timestamps</li>
+                <li>3. Reproduza o vídeo e veja as imagens de Libras sincronizadas em tempo real</li>
+                <li>4. As imagens aparecem automaticamente conforme o áudio do vídeo</li>
+            </ol>
+        </div>
+    </div>
+<script>
+
+// Exibe o vídeo selecionado e trata erros
+const videoInput = document.getElementById('videoInput');
+const videoPlayer = document.getElementById('videoPlayer');
+const videoError = document.getElementById('videoError');
+videoInput.addEventListener('change', function() {
+    const file = this.files[0];
+    videoError.textContent = '';
+    videoPlayer.pause();
+    videoPlayer.removeAttribute('src');
+    videoPlayer.load();
+    if (file) {
+        const url = URL.createObjectURL(file);
+        console.log('Arquivo de vídeo selecionado:', file.name, file.size, file.type);
+        videoPlayer.src = url;
+        videoPlayer.load();
+        videoPlayer.onloadeddata = function() {
+            videoError.textContent = '';
+            console.log('Vídeo carregado com sucesso:', videoPlayer.src);
+        };
+        videoPlayer.onerror = function(e) {
+            videoError.textContent = 'Erro ao carregar o vídeo. Formato não suportado ou arquivo corrompido.';
+            console.error('Erro ao carregar vídeo:', e, file);
+        };
+    } else {
+        console.warn('Nenhum arquivo de vídeo selecionado.');
+    }
+});
+
+
+// Lógica para processar VTT e mostrar imagens em tempo real
+const vttInput = document.getElementById('vttInput');
+const librasImagesDiv = document.getElementById('librasImages');
+let segmentos = [];
+let tempos = [];
+let palavrasPorSegmento = [];
+let palavrasDuracao = {};
+
+// Função para limpar e separar palavras (igual ao Python)
+function limparSegmento(texto) {
+    texto = texto.replace(/<c>|<\/c>/g, '');
+    texto = texto.replace(/<\d{2}:\d{2}:\d{2}\.\d{3}>/g, '');
+    texto = texto.replace(/[^\w\sÀ-ÿ]/g, ''); // Remove pontuação, mantém acentos
+    return texto.toLowerCase().split(/\s+/).filter(Boolean);
+}
+
+// Função para converter tempo VTT para segundos
+function tempoParaSegundos(tempo) {
+    const [h, m, sMs] = tempo.split(':');
+    const [s, ms] = sMs.split('.');
+    return parseInt(h)*3600 + parseInt(m)*60 + parseInt(s) + parseInt(ms)/1000;
+}
+
+// Parse do VTT
+vttInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const linhas = e.target.result.split(/\r?\n/);
+            segmentos = [];
+            tempos = [];
+            palavrasPorSegmento = [];
+            palavrasDuracao = {};
+            let i = 0;
+            while (i < linhas.length) {
+                const linha = linhas[i].trim();
+                const reTempo = new RegExp('^\\d{2}:\\d{2}:\\d{2}\\.\\d{3} --> \\d{2}:\\d{2}:\\d{2}\\.\\d{3}');
+                if (reTempo.test(linha)) {
+                    const tempoIni = linha.split('-->')[0].trim();
+                    const tempoIniS = tempoParaSegundos(tempoIni);
+                    i++;
+                    let texto = '';
+                    // Junta todas as linhas de texto até próxima linha de tempo ou linha vazia
+                    while (i < linhas.length && linhas[i].trim() !== '' && !reTempo.test(linhas[i].trim())) {
+                        texto += linhas[i].trim() + ' ';
+                        i++;
+                    }
+                    segmentos.push(texto.trim());
+                    tempos.push(tempoIniS);
+                    palavrasPorSegmento.push(limparSegmento(texto));
+                } else {
+                    i++;
+                }
+            }
+            // Calcular duração de cada palavra
+            let palavraUltimoIdx = {};
+            let palavraDuracaoTemp = {};
+            for (let idx = 0; idx < palavrasPorSegmento.length; idx++) {
+                let palavras = palavrasPorSegmento[idx];
+                palavras.forEach(palavra => {
+                    if (palavraUltimoIdx[palavra] !== undefined && idx - palavraUltimoIdx[palavra] === 1) {
+                        palavraDuracaoTemp[palavra] = (palavraDuracaoTemp[palavra] || 1) + 1;
+                    } else {
+                        palavraDuracaoTemp[palavra] = 1;
+                    }
+                    palavraUltimoIdx[palavra] = idx;
+                });
+            }
+            palavrasDuracao = palavraDuracaoTemp;
+        };
+        reader.readAsText(file, 'utf-8');
+    }
+});
+
+// Mostra imagens das palavras do segmento atual
+function mostrarImagens(palavras) {
+    librasImagesDiv.innerHTML = '';
+    const container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexWrap = 'wrap';
+    container.style.gap = '6px';
+    container.style.alignItems = 'center';
+    container.style.maxWidth = '100%';
+
+    palavras.forEach(palavra => {
+        if (!palavra) return;
+        // Remove acentos e caracteres especiais do nome da imagem
+        const letra = palavra[0].toLowerCase();
+        let nome = palavra.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+        nome = nome.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+        const urlPalavra = `imagens/${letra}/${nome}.jpg`;
+        const imgPalavra = document.createElement('img');
+        imgPalavra.src = urlPalavra;
+        imgPalavra.alt = palavra;
+        imgPalavra.style.height = '40px';
+        imgPalavra.style.width = 'auto';
+        imgPalavra.style.margin = '2px 0';
+        let tentouLetra = false;
+        imgPalavra.onerror = function() {
+            if (!tentouLetra) {
+                tentouLetra = true;
+                // Se não achou a palavra, mostra as letras
+                for (let l of nome) {
+                    if (!l.match(/[A-Z0-9]/)) continue;
+                    const urlLetra = `imagens/${l.toLowerCase()}/${l}.jpg`;
+                    const imgLetra = document.createElement('img');
+                    imgLetra.src = urlLetra;
+                    imgLetra.alt = l;
+                    imgLetra.style.height = '40px';
+                    imgLetra.style.width = 'auto';
+                    imgLetra.style.margin = '2px 0';
+                    imgLetra.onerror = function() { this.style.display = 'none'; };
+                    container.appendChild(imgLetra);
+                }
+            }
+            this.style.display = 'none';
+        };
+        container.appendChild(imgPalavra);
+    });
+    librasImagesDiv.appendChild(container);
+}
+
+
+// Sincroniza imagens com o tempo do vídeo, atualizando só quando o segundo muda
+let ultimoSegundoMostrado = -1;
+const segmentoAtualDiv = document.getElementById('segmentoAtual');
+videoPlayer.addEventListener('timeupdate', function() {
+    if (!tempos.length) return;
+    const t = Math.floor(videoPlayer.currentTime); // segundo atual
+    if (t === ultimoSegundoMostrado) return; // só atualiza se mudou de segundo
+    ultimoSegundoMostrado = t;
+    let idx = 0;
+    for (let i = 0; i < tempos.length; i++) {
+        if (t >= Math.floor(tempos[i])) idx = i;
+        else break;
+    }
+    // Filtra palavras que aparecem nos 2 segmentos imediatamente anteriores
+    let palavrasSegmento = palavrasPorSegmento[idx] || [];
+    let palavrasAnt1 = idx > 0 ? palavrasPorSegmento[idx-1] || [] : [];
+    let palavrasAnt2 = idx > 1 ? palavrasPorSegmento[idx-2] || [] : [];
+    let palavrasFiltradas = palavrasSegmento.filter(palavra => {
+        if (palavra === 'gtgt') return false;
+        return !(palavrasAnt1.includes(palavra) && palavrasAnt2.includes(palavra));
+    });
+    // Exibe legenda limpa do segmento atual, filtrando as palavras removidas e 'gtgt'
+    let textoSegmento = (segmentos[idx] || '').replace(/<c>|<\/c>/g, '').replace(/<\d{2}:\d{2}:\d{2}\.\d{3}>/g, '').replace(/gtgt/gi, '');
+    let textoFiltrado = palavrasFiltradas.join(' ');
+    segmentoAtualDiv.textContent = textoFiltrado.trim();
+    mostrarImagens(palavrasFiltradas);
+});
+</script>
+</body>
+</html>
