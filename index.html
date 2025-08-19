@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libras Player - Acessibilidade Moderna</title>
+    <link rel="icon" type="image/png" href="img/libras-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+            .navbar {
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                background: rgba(24,24,27,0.92);
+                border-bottom: 1.5px solid var(--zinc-800);
+                z-index: 100;
+                box-shadow: 0 2px 16px #0002;
+            }
+            .navbar-content {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 24px;
+                height: 64px;
+            }
+            .navbar-logo {
+                font-weight: 700;
+                font-size: 1.5rem;
+                background: linear-gradient(90deg, var(--red), var(--orange));
+                -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+                background-clip: text; color: transparent;
+                text-decoration: none;
+            }
+            .navbar-logo span {
+                color: var(--red); -webkit-text-fill-color: var(--red); text-fill-color: var(--red); background: none;
+            }
+            .navbar-links {
+                display: flex; gap: 18px;
+            }
+            .navbar-link {
+                color: var(--zinc-300);
+                font-weight: 600;
+                text-decoration: none;
+                padding: 8px 18px;
+                border-radius: 999px;
+                transition: background .2s, color .2s;
+                font-size: 1rem;
+            }
+            .navbar-link:hover, .navbar-link.active {
+                background: linear-gradient(90deg, var(--red), var(--orange));
+                color: #fff;
+            }
+            @media (max-width: 700px) {
+                .navbar-content { padding: 0 8px; }
+                .navbar-logo { font-size: 1.1rem; }
+                .navbar-link { font-size: 0.95rem; padding: 7px 10px; }
+            }
+        :root {
+            --red: #ef4444;
+            --orange: #fb923c;
+            --pink: #ec4899;
+            --zinc-900: #18181b;
+            --zinc-800: #27272a;
+            --zinc-700: #3f3f46;
+            --zinc-500: #71717a;
+            --zinc-400: #a1a1aa;
+            --zinc-300: #d4d4d8;
+            --white: #fff;
+            --glass: rgba(24,24,27,0.7);
+            --radius: 1.2rem;
+        }
+        html, body {
+            margin: 0; padding: 0; min-height: 100%;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(to bottom, var(--zinc-900), #000 90%);
+            color: var(--white);
+        }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0;
+        }
+        .hero-bg .circle {
+            position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.18;
+        }
+        .hero-bg .c1 { top: 80px; left: 40px; width: 320px; height: 320px; background: var(--red); }
+        .hero-bg .c2 { top: 180px; right: 40px; width: 320px; height: 320px; background: var(--orange); }
+        .hero-bg .c3 { bottom: 80px; left: 33vw; width: 320px; height: 320px; background: var(--pink); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+        .section { padding: 80px 0 60px 0; position: relative; }
+        .glass-card {
+            background: var(--glass); border-radius: var(--radius); box-shadow: 0 4px 32px #0002;
+            border: 1.5px solid var(--zinc-800); padding: 32px; margin-bottom: 24px;
+            backdrop-filter: blur(8px);
+        }
+        .section-title {
+            font-size: 2.5rem; font-weight: 700; margin-bottom: 8px;
+            background: linear-gradient(90deg, var(--red), var(--orange));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; color: transparent;
+        }
+        .section-subtitle {
+            color: var(--zinc-400); font-size: 1.2rem; margin-bottom: 32px;
+        }
+        .btn-main {
+            background: linear-gradient(90deg, var(--red), var(--orange));
+            color: #fff; border: none; border-radius: 999px; padding: 14px 32px;
+            font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: filter .2s;
+            box-shadow: 0 2px 12px #ef444455;
+        }
+        .btn-main:hover { filter: brightness(1.1); }
+        .btn-outline {
+            background: transparent; color: var(--red); border: 2px solid var(--zinc-700);
+            border-radius: 999px; padding: 12px 28px; font-weight: 700; cursor: pointer;
+            transition: border .2s, color .2s;
+        }
+        .btn-outline:hover { color: var(--orange); border-color: var(--zinc-500); }
+        .stats { display: flex; gap: 32px; margin-top: 32px; }
+        .stat { text-align: center; }
+        .stat .num { font-size: 2rem; font-weight: 700; }
+        .stat .desc { color: var(--zinc-500); font-size: 1rem; }
+        .how-steps { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 40px; }
+        .how-step { flex: 1 1 220px; min-width: 220px; background: var(--zinc-800); border-radius: var(--radius); padding: 32px 20px; text-align: center; }
+        .how-step .step-num { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px auto; border-radius: 50%; font-size: 1.5rem; font-weight: 700; }
+        .how-step .step1 { background: #ef444422; color: var(--red); }
+        .how-step .step2 { background: #fb923c22; color: var(--orange); }
+        .how-step .step3 { background: #ec489922; color: var(--pink); }
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+        .project-card {
+            position: relative;
+            flex: 1 1 210px;
+            max-width: 250px;
+            min-width: 180px;
+            background: var(--glass);
+            border-radius: var(--radius);
+            padding: 22px 12px 22px 12px;
+            box-shadow: 0 6px 32px #ef444422, 0 2px 12px #0002;
+            border: 1.5px solid var(--zinc-800);
+            transition: transform .18s, box-shadow .18s, border .18s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        @media (max-width: 1100px) {
+            .project-card { max-width: 48%; min-width: 160px; }
+        }
+        @media (max-width: 700px) {
+            .projects { flex-direction: column; gap: 18px; }
+            .project-card { max-width: 100%; min-width: 0; }
+        }
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.025);
+            box-shadow: 0 12px 40px #ef444433, 0 4px 24px #0003;
+            border: 1.5px solid var(--red);
+        }
+        .project-card img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            background: #fff1;
+            box-shadow: 0 2px 8px #0001;
+            padding: 8px;
+        }
+        .project-card .tags {
+            margin: 14px 0 0 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .project-card .tag-pill {
+            font-size: 0.98rem;
+            color: var(--zinc-400);
+            background: rgba(255,255,255,0.08);
+            border: 1px solid #fff2;
+            border-radius: 999px;
+            padding: 6px 18px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .project-card .btn-main {
+            margin-top: 22px;
+            width: 100%;
+            font-size: 1.05rem;
+            padding: 12px 0;
+        }
+        .project-card .btn-main:active {
+            filter: brightness(0.95);
+        }
+        .impact-list { margin: 0; padding: 0; list-style: none; }
+        .impact-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+        .impact-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 6px; }
+        .dot-red { background: var(--red); }
+        .dot-orange { background: var(--orange); }
+        .dot-pink { background: var(--pink); }
+        .footer { border-top: 1.5px solid var(--zinc-800); padding: 48px 0 24px 0; color: var(--zinc-500); text-align: center; font-size: 1rem; margin-top: 60px; }
+        .footer .brand { font-weight: 700; font-size: 1.3rem; background: linear-gradient(90deg, var(--red), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent; }
+        @media (max-width: 900px) {
+            .stats, .how-steps, .projects { flex-direction: column; gap: 18px; }
+            .container { padding: 0 8px; }
+        }
+        @media (max-width: 600px) {
+            .section { padding: 48px 0 32px 0; }
+            .glass-card, .how-step, .project-card { padding: 18px 8px; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+    <body>
+        <header class="navbar">
+            <nav class="navbar-content">
+                <a href="index.html" class="navbar-logo">Libras<span style="color:var(--red);">YT</span></a>
+                <div class="navbar-links">
+                    <a href="index.html" class="navbar-link active">Home</a>
+                    <a href="player.html" class="navbar-link">Player</a>
+                </div>
+            </nav>
+        </header>
+        <div style="height:70px;"></div>
+    <!-- HERO -->
+    <section class="section" style="min-height: 75vh; display: flex; align-items: center; position: relative; padding-top: 40px;">
+        <div class="hero-bg">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+        </div>
+        <div class="container" style="display: flex; flex-wrap: wrap; align-items: center; gap: 48px;">
+            <div style="flex:1 1 350px; min-width: 300px; z-index:2;">
+                <div style="margin-bottom: 18px;">
+                    <span style="display:inline-block; background:rgba(255,255,255,0.08); border:1px solid #fff2; border-radius:999px; padding:6px 18px; font-size:1rem; font-weight:500;">Tecnologia para Acessibilidade</span>
+                </div>
+                <h1 style="font-size:2.8rem; font-weight:700; line-height:1.1; margin:0 0 12px 0;">
+                    <span style="display:block;">Quebrando</span>
+                    <span style="background:linear-gradient(90deg, var(--red), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; color:transparent;">Barreiras</span>
+                    <span style="display:block; font-size:2rem; margin-top:8px;">de Comunicação</span>
+                </h1>
+                <p style="font-size:1.2rem; color:var(--zinc-400); max-width:500px;">Transformamos vídeos em experiências acessíveis através da sincronização automática com Libras em tempo real.</p>
+                <div style="margin-top:32px; display:flex; gap:18px; flex-wrap:wrap;">
+                      <a href="player.html" class="btn-main" style="text-decoration: none;">Experimentar Player</a>
+                    <a href="#about" class="btn-outline" style="text-decoration: none;">Saiba Mais</a>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="num" style="color:var(--red);">10M+</div>
+                        <div class="desc">Pessoas surdas no Brasil</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" style="color:var(--orange);">95%</div>
+                        <div class="desc">Conteúdo sem acessibilidade</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num" style="color:var(--pink);">100%</div>
+                        <div class="desc">Gratuito e open-source</div>
+                    </div>
+                </div>
+            </div>
+            <div style="flex:1 1 350px; min-width: 260px; display:flex; justify-content:center;">
+                <div style="position:relative;">
+                    <div style="position:absolute; inset:-18px; border-radius:var(--radius); background:linear-gradient(90deg, var(--red), var(--orange)); opacity:0.18; filter:blur(18px);"></div>
+                    <img src="img/libras-logo.png" alt="Libras Logo" style="width:320px; max-width:90vw; border-radius:var(--radius); background:var(--red); padding:32px; border:2px solid var(--zinc-800); position:relative; z-index:2;" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MISSÃO -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">Nossa Missão</div>
+            <div class="section-subtitle">Tecnologia que conecta pessoas</div>
+            <div style="display:flex; flex-wrap:wrap; gap:32px; align-items:center;">
+                <div style="flex:1 1 350px; min-width:260px;">
+                    <div class="glass-card">
+                        <h3 style="font-size:1.5rem; color:var(--red); font-weight:700; margin-bottom:12px;">Inclusão Digital</h3>
+                        <p style="color:var(--zinc-300); font-size:1.1rem;">Acreditamos que a tecnologia deve ser acessível para todos. Nossa plataforma quebra barreiras de comunicação, permitindo que pessoas surdas tenham acesso completo ao conteúdo audiovisual.</p>
+                        <p style="color:var(--zinc-300); font-size:1.1rem; margin-top:12px;">Através da sincronização automática de vídeos com imagens de Libras, criamos uma ponte entre o mundo ouvinte e a comunidade surda, promovendo verdadeira inclusão digital.</p>
+                    </div>
+                </div>
+                <div style="flex:1 1 350px; min-width:260px; display:flex; flex-direction:column; gap:18px;">
+                    <div class="glass-card">
+                        <h4 style="font-size:1.1rem; color:var(--red); font-weight:600; margin-bottom:8px;">Acessibilidade Universal</h4>
+                        <p style="color:var(--zinc-300);">Tecnologia que adapta automaticamente qualquer conteúdo audiovisual do youtube para Libras.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h4 style="font-size:1.1rem; color:var(--orange); font-weight:600; margin-bottom:8px;">Impacto Social</h4>
+                        <p style="color:var(--zinc-300);">Conectando milhões de pessoas surdas ao conteúdo digital de forma natural e intuitiva.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h4 style="font-size:1.1rem; color:var(--pink); font-weight:600; margin-bottom:8px;">Tempo Real</h4>
+                        <p style="color:var(--zinc-300);">Sincronização satisfatória entre áudio, legendas e sinais de Libras em tempo real.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="section" id="skills">
+        <div class="container">
+            <div class="section-title">Como Funciona</div>
+            <div class="section-subtitle">Simples, rápido e eficiente</div>
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="step-num step1">1</div>
+                    <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Upload do Vídeo</h3>
+                    <p style="color:var(--zinc-300);">Faça upload do seu vídeo MP4 e do arquivo de legendas VTT com timestamps precisos.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-num step2">2</div>
+                    <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Processamento Automático</h3>
+                    <p style="color:var(--zinc-300);">Nosso software processa as legendas e sincroniza automaticamente com as imagens de Libras correspondentes.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-num step3">3</div>
+                    <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Reprodução Acessível</h3>
+                    <p style="color:var(--zinc-300);">Assista ao vídeo com sinais de Libras aparecendo em tempo real, satisfatoriamente sincronizados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RECURSOS/PROJETOS -->
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-title">Recursos da Plataforma</div>
+            <div class="section-subtitle">Tecnologia de ponta para acessibilidade</div>
+            <div class="projects">
+                <div class="project-card">
+                    <img src="img/libras-logo.png" alt="Player de Vídeo Inteligente"/>
+                    <h4 style="font-size:1.2rem; font-weight:700; margin-bottom:8px; text-align:center;">Player de Vídeo Inteligente</h4>
+                    <p style="color:var(--zinc-300); text-align:center;">Interface intuitiva que sincroniza automaticamente vídeos com sinais de Libras em tempo real.</p>
+                    <div class="tags">
+                        <span class="tag-pill">React</span>
+                        <span class="tag-pill">TypeScript</span>
+                        <span class="tag-pill">Accessibility</span>
+                        <span class="tag-pill">Real-time</span>
+                    </div>
+                    <a href="player.html" class="btn-main" target="_blank" style="text-decoration:none; text-align: center;">Experimentar Player</a>
+                </div>
+                <div class="project-card">
+                    <img src="img/subtitle-processing-interface.png" alt="Processamento de Legendas VTT" />
+                    <h4 style="font-size:1.2rem; font-weight:700; margin-bottom:8px; text-align:center;">Baixar Video e Legenda</h4>
+                    <p style="color:var(--zinc-300); text-align:center;">Sistema avançado que baixa arquivos VTT, STR (legendas) e os videos do Youtube para utilização do player.</p>
+                    <div class="tags">
+                        <span class="tag-pill">VTT Parser</span>
+                        <span class="tag-pill">Youtube API</span>
+                        <span class="tag-pill">Sync Engine</span>
+                    </div>
+                    <a href="https://github.com/alancscosta/Download-Videos-Youtube" class="btn-main" target="_blank" style="text-decoration:none; text-align: center;">Baixar</a>
+                </div>
+                <div class="project-card">
+                    <img src="img/sign-language-library.png" alt="Biblioteca de Sinais"/>
+                    <h4 style="font-size:1.2rem; font-weight:700; margin-bottom:8px; text-align:center;">Biblioteca de Sinais</h4>
+                    <p style="color:var(--zinc-300); text-align:center;">Extensa coleção de imagens de Libras organizadas por letras e palavras para máxima precisão.</p>
+                    <div class="tags">
+                        <span class="tag-pill">Image Library</span>
+                        <span class="tag-pill">Libras Database</span>
+                        <span class="tag-pill">Optimization</span>
+                    </div>
+                    <br>
+                    <a href="https://www.ines.gov.br/dicionario-de-libras" class="btn-main" target="_blank" style="text-decoration:none; text-align: center;">Explorar Biblioteca</a>
+                </div>
+                <div class="project-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="background:#fff; padding:12px;"/>
+                    <h4 style="font-size:1.2rem; font-weight:700; margin-bottom:8px; text-align:center;">Repositório no GitHub</h4>
+                    <p style="color:var(--zinc-300); text-align:center;">Acesse, visualize e contribua com o código do projeto diretamente no Repositório do GitHub.</p>
+                    <div class="tags">
+                        <span class="tag-pill">Open Source</span>
+                        <span class="tag-pill">GitHub</span>
+                        <span class="tag-pill">Colabore</span>
+                        <br>
+                    </div>
+                    <br>
+                    <a href="https://github.com/alancscosta" target="_blank" class="btn-main" style="text-decoration:none; text-align: center;">Visitar Código</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMPACTO SOCIAL -->
+    <section class="section" id="impact">
+        <div class="container">
+            <div class="section-title">Impacto Social</div>
+            <div class="section-subtitle">Transformando vidas através da tecnologia</div>
+            <div style="display:flex; flex-wrap:wrap; gap:32px;">
+                <div class="glass-card" style="flex:1 1 350px; min-width:260px;">
+                    <h3 style="font-size:1.3rem; color:var(--red); font-weight:700; margin-bottom:12px;">Por que isso importa?</h3>
+                    <ul class="impact-list">
+                        <li><span class="impact-dot dot-red"></span> <span><strong>10 milhões</strong> de pessoas surdas no Brasil enfrentam barreiras diárias para acessar conteúdo audiovisual.</span></li>
+                        <li><span class="impact-dot dot-orange"></span> <span><strong>95%</strong> do conteúdo online não possui recursos de acessibilidade adequados para a comunidade surda.</span></li>
+                        <li><span class="impact-dot dot-pink"></span> <span>Nossa tecnologia democratiza o acesso à informação, educação e entretenimento, promovendo verdadeira <strong style="color:var(--red);">inclusão digital</strong>.</span></li>
+                    </ul>
+                </div>
+                <div class="glass-card" style="flex:1 1 350px; min-width:260px;">
+                    <h3 style="font-size:1.3rem; color:var(--orange); font-weight:700; margin-bottom:12px;">Casos de Uso</h3>
+                    <ul class="impact-list">
+                        <li><span class="impact-dot dot-red"></span> <span><strong>Educação:</strong> Aulas online acessíveis para estudantes surdos</span></li>
+                        <li><span class="impact-dot dot-orange"></span> <span><strong>Corporativo:</strong> Treinamentos inclusivos</span></li>
+                        <li><span class="impact-dot dot-pink"></span> <span><strong>Entretenimento:</strong> Filmes, séries e vídeos com Libras automática</span></li>
+                        <li><span class="impact-dot dot-red"></span> <span><strong>Governo:</strong> Comunicação pública acessível</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="brand">Libras<span style="color:#fff;">YT</span></div>
+        <div style="margin-top:8px;">© 2025 LibrasYT. Tecnologia para todos. By: Alan C. S. Costa para a comunidade surda.</div>
+    </footer>
+</body>
+</html>
