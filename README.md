@@ -34,11 +34,24 @@ LibrasYT-Website/
   unzip imagens.zip
   ```
 
-### 3️⃣ Instale um servidor web local (opcional, recomendado)
-- Você pode rodar o site diretamente clicando no arquivo `index.html`,  
-  mas para melhor funcionamento (especialmente com arquivos locais e scripts), recomenda-se um servidor local.
+### 3️⃣ Execute em um servidor web local (recomendado)
 
-Exemplo usando o Python:
+Você pode abrir o arquivo `index.html` diretamente, mas **o ideal é rodar o projeto em um servidor local para garantir o funcionamento correto dos scripts e do carregamento dos arquivos**.
+
+#### 🔸 Recomendação: XAMPP
+
+- Baixe e instale o [XAMPP](https://www.apachefriends.org/index.html) (disponível para Windows, Linux e Mac).
+- Após instalar, mova a pasta do projeto para dentro do diretório `htdocs` do XAMPP. Exemplo:
+  ```
+  C:\xampp\htdocs\LibrasYT-Website
+  ```
+- Inicie o servidor Apache pelo painel do XAMPP.
+- No navegador, acesse:
+  ```
+  http://localhost/LibrasYT-Website
+  ```
+
+#### Alternativa: Python (para usuários avançados)
 ```bash
 # No diretório do projeto:
 python -m http.server 8000
